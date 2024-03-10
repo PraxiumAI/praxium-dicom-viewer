@@ -1,6 +1,8 @@
 import dicomImageLoader from '@cornerstonejs/dicom-image-loader';
 
 import { PubSubService } from '@ohif/core';
+import dcmjs from 'dcmjs';
+import { parseDicom } from 'dicom-parser';
 
 export const EVENTS = {
   PROGRESS: 'event:DicomFileUploader:progress',
@@ -129,9 +131,10 @@ export default class DicomFileUploader extends PubSubService {
           const request = new XMLHttpRequest();
           this._addRequestCallbacks(request, uploadCallbacks);
 
-          // Do the actual upload by supplying the DICOM file and upload callbacks/listeners.
+          const anonymized = this._anonymize(dicomFile);
+
           return this._dataSource.store
-            .dicom(dicomFile, request)
+            .dicom(anonymized, request)
             .then(() => {
               this._status = UploadStatus.Success;
               resolve();
@@ -200,5 +203,24 @@ export default class DicomFileUploader extends PubSubService {
     const arr = new Uint8Array(arrayBuffer.slice(128, 132));
     // bytes from 128 to 132 must be "DICM"
     return Array.from('DICM').every((char, i) => char.charCodeAt(0) === arr[i]);
+  }
+
+  private _anonymize(arrayBuffer: ArrayBuffer): ArrayBuffer {
+    try {
+      const data = dcmjs.data.DicomMessage.readFile(arrayBuffer);
+
+      const dataset = dcmjs.data.DicomMetaDictionary.naturalizeDataset(data.dict);
+
+      const now = new Date();
+
+      dataset.PatientName = now.toISOString();
+      dataset.PatientID = now.valueOf();
+
+      data.dict = dcmjs.data.DicomMetaDictionary.denaturalizeDataset(dataset);
+
+      return data.write();
+    } catch (err) {
+      throw new Error(`Failed to anonymize file: \n${err.message}`);
+    }
   }
 }

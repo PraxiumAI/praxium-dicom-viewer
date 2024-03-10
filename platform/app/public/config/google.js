@@ -5,16 +5,16 @@ window.config = {
       '@ohif/extension-cornerstone.customizationModule.cornerstoneDicomUploadComponent',
   },
   whiteLabeling: {
-    createLogoComponentFn: function(React) {
+    createLogoComponentFn: function (React) {
       return React.createElement(
         'a',
         {
           className: 'text-white',
-          href: '#'
+          href: '#',
         },
         React.createElement('h5', {}, 'Praxium')
-      )
-    }
+      );
+    },
   },
   enableGoogleCloudAdapter: false,
   // below flag is for performance reasons, but it might not work for all servers
@@ -53,11 +53,11 @@ window.config = {
         friendlyName: 'dcmjs DICOMWeb Server',
         name: 'GCP',
         wadoUriRoot:
-          'https://healthcare.googleapis.com/v1/projects/nyukat/locations/europe-west3/datasets/test-dicom-3/dicomStores/dicom-test',
+          'https://healthcare.googleapis.com/v1/projects/nyukat/locations/europe-west3/datasets/art-test/dicomStores/art-test-store/dicomWeb',
         qidoRoot:
-          'https://healthcare.googleapis.com/v1/projects/nyukat/locations/europe-west3/datasets/test-dicom-3/dicomStores/dicom-test',
+          'https://healthcare.googleapis.com/v1/projects/nyukat/locations/europe-west3/datasets/art-test/dicomStores/art-test-store/dicomWeb',
         wadoRoot:
-          'https://healthcare.googleapis.com/v1/projects/projects/nyukat/locations/europe-west3/datasets/test-dicom-3/dicomStores/dicom-test',
+          'https://healthcare.googleapis.com/v1/projects/projects/nyukat/locations/europe-west3/datasets/art-test/dicomStores/art-test-store/dicomWeb',
         qidoSupportsIncludeField: true,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',
@@ -68,6 +68,6 @@ window.config = {
         omitQuotationForMultipartRequest: true,
         configurationAPI: 'ohif.dataSourceConfigurationAPI.google',
       },
-    }
+    },
   ],
 };
