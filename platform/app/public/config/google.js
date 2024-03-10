@@ -4,6 +4,18 @@ window.config = {
     dicomUploadComponent:
       '@ohif/extension-cornerstone.customizationModule.cornerstoneDicomUploadComponent',
   },
+  whiteLabeling: {
+    createLogoComponentFn: function(React) {
+      return React.createElement(
+        'a',
+        {
+          className: 'text-white',
+          href: '#'
+        },
+        React.createElement('h5', {}, 'Praxium')
+      )
+    }
+  },
   enableGoogleCloudAdapter: false,
   // below flag is for performance reasons, but it might not work for all servers
   showWarningMessageForCrossOrigin: true,
@@ -16,7 +28,7 @@ window.config = {
       // ~ REQUIRED
       // Authorization Server URL
       authority: 'https://accounts.google.com',
-      client_id: '723928408739-k9k9r3i44j32rhu69vlnibipmmk9i57p.apps.googleusercontent.com',
+      client_id: '794553766638-sth0me9q4jbsev0t7ongmp6662ujmib2.apps.googleusercontent.com',
       redirect_uri: '/callback',
       response_type: 'id_token token',
       scope:
@@ -41,11 +53,11 @@ window.config = {
         friendlyName: 'dcmjs DICOMWeb Server',
         name: 'GCP',
         wadoUriRoot:
-          'https://healthcare.googleapis.com/v1/projects/ohif-cloud-healthcare/locations/us-east4/datasets/ohif-qa-dataset/dicomStores/ohif-qa-2/dicomWeb',
+          'https://healthcare.googleapis.com/v1/projects/nyukat/locations/europe-west3/datasets/test-dicom-3/dicomStores/dicom-test',
         qidoRoot:
-          'https://healthcare.googleapis.com/v1/projects/ohif-cloud-healthcare/locations/us-east4/datasets/ohif-qa-dataset/dicomStores/ohif-qa-2/dicomWeb',
+          'https://healthcare.googleapis.com/v1/projects/nyukat/locations/europe-west3/datasets/test-dicom-3/dicomStores/dicom-test',
         wadoRoot:
-          'https://healthcare.googleapis.com/v1/projects/ohif-cloud-healthcare/locations/us-east4/datasets/ohif-qa-dataset/dicomStores/ohif-qa-2/dicomWeb',
+          'https://healthcare.googleapis.com/v1/projects/projects/nyukat/locations/europe-west3/datasets/test-dicom-3/dicomStores/dicom-test',
         qidoSupportsIncludeField: true,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',
@@ -56,21 +68,6 @@ window.config = {
         omitQuotationForMultipartRequest: true,
         configurationAPI: 'ohif.dataSourceConfigurationAPI.google',
       },
-    },
-    {
-      namespace: '@ohif/extension-default.dataSourcesModule.dicomjson',
-      sourceName: 'dicomjson',
-      configuration: {
-        friendlyName: 'dicom json',
-        name: 'json',
-      },
-    },
-    {
-      namespace: '@ohif/extension-default.dataSourcesModule.dicomlocal',
-      sourceName: 'dicomlocal',
-      configuration: {
-        friendlyName: 'dicom local',
-      },
-    },
+    }
   ],
 };

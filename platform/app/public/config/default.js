@@ -1,6 +1,17 @@
 window.config = {
   routerBasename: '/',
-  // whiteLabeling: {},
+  whiteLabeling: {
+    createLogoComponentFn: function(React) {
+      return React.createElement(
+        'a',
+        {
+          className: 'text-white',
+          href: '#'
+        },
+        React.createElement('h5', {}, 'Praxium')
+      )
+    }
+  },
   extensions: [],
   modes: [],
   customizationService: {},
