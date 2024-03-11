@@ -57,7 +57,7 @@ window.config = {
         qidoRoot:
           'https://healthcare.googleapis.com/v1/projects/nyukat/locations/europe-west3/datasets/art-test/dicomStores/art-test-store/dicomWeb',
         wadoRoot:
-          'https://healthcare.googleapis.com/v1/projects/projects/nyukat/locations/europe-west3/datasets/art-test/dicomStores/art-test-store/dicomWeb',
+          'https://healthcare.googleapis.com/v1/projects/nyukat/locations/europe-west3/datasets/art-test/dicomStores/art-test-store/dicomWeb',
         qidoSupportsIncludeField: true,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',
