@@ -13,11 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Create env file
-        run: |
-          touch .env
-          echo APP_CONFIG="config/google.js" >> .env
-          cat .env
       - run: yarn && yarn build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
