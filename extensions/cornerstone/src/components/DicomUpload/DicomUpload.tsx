@@ -7,6 +7,7 @@ import DicomFileUploader from '../../utils/DicomFileUploader';
 import DicomUploadProgress from './DicomUploadProgress';
 import { Button, ButtonEnums } from '@ohif/ui';
 import './DicomUpload.css';
+import { useProfile } from '../../hooks/useProfile';
 
 type DicomUploadProps = {
   dataSource;
@@ -17,10 +18,13 @@ type DicomUploadProps = {
 function DicomUpload({ dataSource, onComplete, onStarted }: DicomUploadProps): ReactElement {
   const baseClassNames = 'min-h-[480px] flex flex-col bg-black select-none';
   const [dicomFileUploaderArr, setDicomFileUploaderArr] = useState([]);
+  const profile = useProfile();
 
   const onDrop = useCallback(async acceptedFiles => {
     onStarted();
-    setDicomFileUploaderArr(acceptedFiles.map(file => new DicomFileUploader(file, dataSource)));
+    setDicomFileUploaderArr(
+      acceptedFiles.map(file => new DicomFileUploader(file, dataSource, profile?.sub))
+    );
   }, []);
 
   const getDropZoneComponent = (): ReactElement => {

@@ -26,7 +26,6 @@ import dicomLoaderService from './utils/dicomLoaderService';
 import getActiveViewportEnabledElement from './utils/getActiveViewportEnabledElement';
 
 import { id } from './id';
-import * as csWADOImageLoader from './initWADOImageLoader.js';
 import { measurementMappingUtils } from './utils/measurementServiceMappings';
 import type { PublicViewportOptions } from './services/ViewportService/Viewport';
 import ImageOverlayViewerTool from './tools/ImageOverlayViewerTool';

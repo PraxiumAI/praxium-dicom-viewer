@@ -2,7 +2,6 @@ import dicomImageLoader from '@cornerstonejs/dicom-image-loader';
 
 import { PubSubService } from '@ohif/core';
 import dcmjs from 'dcmjs';
-import { parseDicom } from 'dicom-parser';
 
 export const EVENTS = {
   PROGRESS: 'event:DicomFileUploader:progress',
@@ -39,16 +38,18 @@ export class UploadRejection {
 export default class DicomFileUploader extends PubSubService {
   private _file;
   private _fileId;
+  private _userId: string | undefined;
   private _dataSource;
   private _loadPromise;
   private _abortController = new AbortController();
   private _status: UploadStatus = UploadStatus.NotStarted;
   private _percentComplete = 0;
 
-  constructor(file, dataSource) {
+  constructor(file, dataSource, userId: string | undefined) {
     super(EVENTS);
     this._file = file;
     this._fileId = dicomImageLoader.wadouri.fileManager.add(file);
+    this._userId = userId;
     this._dataSource = dataSource;
   }
 
@@ -131,10 +132,13 @@ export default class DicomFileUploader extends PubSubService {
           const request = new XMLHttpRequest();
           this._addRequestCallbacks(request, uploadCallbacks);
 
-          const anonymized = this._anonymize(dicomFile);
+          const prepared = this._anonymizeAndSetUserId(
+            dicomFile,
+            this._userId || new Date().valueOf().toString()
+          );
 
           return this._dataSource.store
-            .dicom(anonymized, request)
+            .dicom(prepared, request)
             .then(() => {
               this._status = UploadStatus.Success;
               resolve();
@@ -205,16 +209,14 @@ export default class DicomFileUploader extends PubSubService {
     return Array.from('DICM').every((char, i) => char.charCodeAt(0) === arr[i]);
   }
 
-  private _anonymize(arrayBuffer: ArrayBuffer): ArrayBuffer {
+  private _anonymizeAndSetUserId(arrayBuffer: ArrayBuffer, userId: string): ArrayBuffer {
     try {
       const data = dcmjs.data.DicomMessage.readFile(arrayBuffer);
 
       const dataset = dcmjs.data.DicomMetaDictionary.naturalizeDataset(data.dict);
 
-      const now = new Date();
-
-      dataset.PatientName = now.toISOString();
-      dataset.PatientID = now.valueOf();
+      dataset.PatientName = new Date().toISOString();
+      dataset.PatientID = userId;
 
       data.dict = dcmjs.data.DicomMetaDictionary.denaturalizeDataset(dataset);
 
