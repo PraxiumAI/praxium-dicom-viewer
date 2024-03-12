@@ -3,7 +3,7 @@ import i18n from 'i18next';
 const filtersMeta = [
   {
     name: 'patientName',
-    displayName: i18n.t('StudyList:PatientName'),
+    displayName: i18n.t('StudyList:Datetime'),
     inputType: 'Text',
     isSortable: true,
     gridCol: 4,
@@ -12,8 +12,9 @@ const filtersMeta = [
     name: 'mrn',
     displayName: i18n.t('StudyList:MRN'),
     inputType: 'Text',
-    isSortable: true,
+    isSortable: false,
     gridCol: 3,
+    isDisabled: true,
   },
   {
     name: 'studyDate',

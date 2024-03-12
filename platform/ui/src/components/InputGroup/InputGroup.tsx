@@ -36,7 +36,14 @@ const InputGroup = ({
     }
   };
 
-  const renderFieldInputComponent = ({ name, displayName, inputProps, isSortable, inputType }) => {
+  const renderFieldInputComponent = ({
+    name,
+    displayName,
+    inputProps,
+    isSortable,
+    inputType,
+    isDisabled = false,
+  }) => {
     const _isSortable = isSortable && isSortingEnabled;
     const _sortDirection = sortBy !== name ? 'none' : sortDirection;
 
@@ -73,6 +80,7 @@ const InputGroup = ({
             onLabelClick={onLabelClick}
             value={values[name]}
             onChange={handleFieldChange}
+            disabled={isDisabled}
           />
         );
       case 'MultiSelect':
@@ -158,6 +166,7 @@ InputGroup.propTypes = {
   }).isRequired,
   onSortingChange: PropTypes.func.isRequired,
   isSortingEnabled: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool,
 };
 
 export default InputGroup;
