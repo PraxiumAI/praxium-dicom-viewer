@@ -89,15 +89,15 @@ function ViewerHeader({ hotkeysManager, extensionManager, servicesManager }) {
     },
   ];
 
-  if (appConfig.oidc) {
-    menuOptions.push({
-      title: t('Header:Logout'),
-      icon: 'power-off',
-      onClick: async () => {
-        navigate(`/logout?redirect_uri=${encodeURIComponent(window.location.href)}`);
-      },
-    });
-  }
+  // if (appConfig.oidc) {
+  //   menuOptions.push({
+  //     title: t('Header:Logout'),
+  //     icon: 'power-off',
+  //     onClick: async () => {
+  //       navigate(`/logout?redirect_uri=${encodeURIComponent(window.location.href)}`);
+  //     },
+  //   });
+  // }
 
   return (
     <Header

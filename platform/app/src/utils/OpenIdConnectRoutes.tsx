@@ -208,10 +208,10 @@ function OpenIdConnectRoutes({ oidc, routerBasename, userAuthenticationService }
           />
         }
       />
-      <Route
-        path="/logout"
-        element={<LogoutComponent userManager={userManager} />}
-      />
+      {/*<Route*/}
+      {/*  path="/logout"*/}
+      {/*  element={<LogoutComponent userManager={userManager} />}*/}
+      {/*/>*/}
     </Routes>
   );
 }

@@ -254,11 +254,13 @@ function WorkList({
     const studyDate =
       date &&
       moment(date, ['YYYYMMDD', 'YYYY.MM.DD'], true).isValid() &&
-      moment(date, ['YYYYMMDD', 'YYYY.MM.DD']).format(t('Common:localDateFormat','MMM-DD-YYYY'));
+      moment(date, ['YYYYMMDD', 'YYYY.MM.DD']).format(t('Common:localDateFormat', 'MMM-DD-YYYY'));
     const studyTime =
       time &&
       moment(time, ['HH', 'HHmm', 'HHmmss', 'HHmmss.SSS']).isValid() &&
-      moment(time, ['HH', 'HHmm', 'HHmmss', 'HHmmss.SSS']).format(t('Common:localTimeFormat', 'hh:mm A'));
+      moment(time, ['HH', 'HHmm', 'HHmmss', 'HHmmss.SSS']).format(
+        t('Common:localTimeFormat', 'hh:mm A')
+      );
 
     return {
       dataCY: `studyRow-${studyInstanceUid}`,
@@ -448,15 +450,15 @@ function WorkList({
     },
   ];
 
-  if (appConfig.oidc) {
-    menuOptions.push({
-      icon: 'power-off',
-      title: t('Header:Logout'),
-      onClick: () => {
-        navigate(`/logout?redirect_uri=${encodeURIComponent(window.location.href)}`);
-      },
-    });
-  }
+  // if (appConfig.oidc) {
+  //   menuOptions.push({
+  //     icon: 'power-off',
+  //     title: t('Header:Logout'),
+  //     onClick: () => {
+  //       navigate(`/logout?redirect_uri=${encodeURIComponent(window.location.href)}`);
+  //     },
+  //   });
+  // }
 
   const { customizationService } = servicesManager.services;
   const { component: dicomUploadComponent } =
