@@ -159,11 +159,25 @@ function mapParams(params, options = {}) {
     return supportsWildcard && value ? `*${value}*` : value;
   };
 
+  let userId;
+
+  const keys = Object.keys(window.sessionStorage).filter(
+    key => key.startsWith('oidc.user:') && key.includes('accounts.google.com')
+  );
+
+  if (keys.length > 0) {
+    const storedData = sessionStorage.getItem(keys[0]);
+    const data = JSON.parse(storedData);
+
+    userId = data?.profile?.sub;
+  }
+
   const parameters = {
     // Named
     PatientName: withWildcard(params.patientName),
     //PatientID: withWildcard(params.patientId),
-    '00100020': withWildcard(params.patientId), // Temporarily to make the tests pass with dicomweb-server.. Apparently it's broken?
+    // '00100020': withWildcard(params.patientId), // Temporarily to make the tests pass with dicomweb-server.. Apparently it's broken?
+    ...(userId && { '00100020': userId }),
     AccessionNumber: withWildcard(params.accessionNumber),
     StudyDescription: withWildcard(params.studyDescription),
     ModalitiesInStudy: params.modalitiesInStudy,
